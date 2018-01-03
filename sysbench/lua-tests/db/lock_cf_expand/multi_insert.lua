@@ -1,6 +1,6 @@
 pathtest = string.match(test, "(.*/)") or ""
 
-dofile(pathtest .. "common.lua")
+dofile(pathtest .. "../common.lua")
 
 function thread_init(thread_id)
    set_vars()
@@ -25,15 +25,11 @@ function event(thread_id)
 ###########-###########-###########-###########-###########]])
 
         if (db_driver == "pgsql" and oltp_auto_inc) then
-        rs = db_query("INSERT INTO " .. table_name .. " (k, c, pad) VALUES " ..
+          rs = db_query("INSERT INTO " .. table_name .. " (k, c, pad) VALUES " ..
                         string.format("(%d, '%s', '%s')", k_val, c_val, pad_val))
         else
-         if (oltp_auto_inc) then
           i = 0
-         else
-          i = sb_rand_uniq(1, oltp_table_size)
-        end
-        rs = db_query("INSERT INTO " .. table_name ..
+          rs = db_query("INSERT INTO " .. table_name ..
                          " (id, k, c, pad) VALUES " ..
                                string.format("(%d, %d, '%s', '%s')", i, k_val, c_val,
                                              pad_val))
